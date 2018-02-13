@@ -14,6 +14,8 @@ if (!exists('Bltm')) {
 }
 
 Bltm$type <- as.factor(Bltm$type)
+Bltm.by_source <- aggregate(Emissions~(type+year), Bltm, mean)
+
 
 #set plot parameters
 png('plot3.png',
@@ -28,7 +30,7 @@ ylab <- 'log(PM2.5 Emission)'
 ggplot(data = Bltm, aes(year, Emissions, color = type)) + 
   geom_jitter(alpha = 0.45) + geom_line(data = Bltm.by_source, size = 1.5) + 
   scale_x_continuous(breaks = c(1999, 2002, 2005, 2008)) + scale_y_log10() + 
-  labs(title = title, y = ylab) + theme_bw()
+  labs(title = title, y = ylab, caption = 'Line represents mean of each type') + theme_bw()
 dev.off()
 
 #General decrease trend is observed. There's a peak of POINT PM2.5 source in 2005
